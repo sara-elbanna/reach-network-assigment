@@ -1,0 +1,42 @@
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$color:#ccc;
+
+// .header{
+//   background-color: aqua;
+// }
+.container {
+  width: 86vw;
+  max-width: 1441px;
+  margin: auto;
+  // padding: 10px 0;
+}
+
+@media (max-width: $screen-sm) {
+  .container {
+    width: 95vw;
+  }  
+}
+@media (max-width: $screen-md) {
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+}
+
+@media (min-width: $screen-md +1) {
+  .mobile {
+    display: none;
+  }
+  .desktop {
+    display: block;
+  }
+}
+@media (width: $screen-md) {
+  .mobile {
+    display: block;
+  }
+}
