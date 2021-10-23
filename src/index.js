@@ -7,8 +7,9 @@ import { applyMiddleware, createStore } from 'redux';
 import appReducer from 'store/reducers';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
-let store = createStore(appReducer, applyMiddleware(thunkMiddleware))
+let store = createStore(appReducer, applyMiddleware(thunkMiddleware, loadingBarMiddleware()))
 
 ReactDOM.render(
   <React.StrictMode>

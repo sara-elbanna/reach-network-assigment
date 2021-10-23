@@ -2,18 +2,22 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import SearchPage from 'components/searchPage/searchPage';
 import Header from 'components/header/header';
+import  LoadingBar from 'react-redux-loading-bar';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <Header/>
+      <Header />
       <div className='content'>
-      <Switch>
-        <Route path="/search">
-          <SearchPage/>
-        </Route>
-      </Switch>
+        <header>
+          <LoadingBar />
+        </header>
+        <Switch>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
+        </Switch>
       </div>
     </BrowserRouter>
   );

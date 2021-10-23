@@ -1,6 +1,8 @@
+import { hideLoading, showLoading } from "react-redux-loading-bar"
+
 export const SET_YOUTUBE_SEARCH_RESULT = 'SET_YOUTUBE_SEARCH_RESULT'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
-const apiKey = 'AIzaSyCC3lI6Sm4mtmJHzoy8h0zbf6LTm-p9RMg'
+const apiKey = 'AIzaSyDtbKOvTS5RlWgpq3p2Kb07U08xBfHfrEU'
 
 export type Video = {
     id: string,
@@ -18,6 +20,7 @@ export type searchResult = {
 }
 export function fetchYoutubeSearchResult(searchText: string) {
     return async (dispatch: any) => {
+        dispatch(showLoading())
         let { videosList, videosIds, totalResults} = await getVideosBasicInfo(searchText)
         let commaSeparatedIds = videosIds.toString()
         let videosDetailsRequest = `https://www.googleapis.com/youtube/v3/videos?id=${commaSeparatedIds}&key=${apiKey}&part=contentDetails,statistics`
@@ -34,6 +37,8 @@ export function fetchYoutubeSearchResult(searchText: string) {
             videos: Object.values(videosList)
         }
         dispatch({ type: SET_YOUTUBE_SEARCH_RESULT, payload: searchResult })
+        dispatch(hideLoading())
+
     }
 }
 
