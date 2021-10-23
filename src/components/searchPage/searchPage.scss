@@ -1,0 +1,51 @@
+@import '../../App.scss';
+.loading{
+    text-align: center;
+    padding-top: 24vh;
+}
+.search-page{
+    background-color: #f7f7f7;
+    padding-top: 40px;
+    &__result{
+        padding-top: 20px;
+    }
+    .video-item{
+        display: flex;
+        margin-bottom: 20px;
+        &__thumbnail{
+            margin-right: 20px;
+        }
+        &__data{
+            margin-right: 0;
+        }
+        &__title{
+            margin: 0;
+            font-weight: 500;
+        }
+    }
+}
+
+@media (max-width: $screen-md) {
+    .search-page {
+        background-color: #fff;
+        padding-top: 0;
+        .video-item{
+            &__thumbnail{
+                width: 55%;
+                img{
+                    width: 100%;
+                }
+            }
+            &__data{
+                width: 45%;
+            }
+            &__title{
+                font-size: 16px;
+                font-weight: 400;
+            }
+            &__description{
+                overflow-wrap: break-word;
+            }
+        }
+    }
+}
