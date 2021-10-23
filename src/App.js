@@ -1,20 +1,20 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.scss';
-import DesktopHeader from 'components/header/desktopHeader';
-import MobileHeader from 'components/header/mobileHeader';
-import SearchPage from 'components/searchPage';
+import SearchPage from 'components/searchPage/searchPage';
+import Header from 'components/header/header';
 
 
 function App() {
   return (
     <BrowserRouter>
-      <DesktopHeader/>
-      <MobileHeader/>
+      <Header/>
+      <div className='content'>
       <Switch>
         <Route path="/search">
           <SearchPage/>
         </Route>
       </Switch>
+      </div>
     </BrowserRouter>
   );
 }
