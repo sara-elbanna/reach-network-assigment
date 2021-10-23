@@ -2,8 +2,10 @@
 
 .header{
     &.desktop{
-        margin-bottom: 20px;
-        margin-top: 20px;
+        position: fixed;
+        width: 100%;
+        background-color: #fff;
+        padding: 20px 0;
     }
     &.mobile{
         background-color: red;
@@ -17,5 +19,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+    }
+    &__search-btn{
+        background: none;
+        border: none;
+    }
+}
+
+@media (max-width: $screen-md) {
+    .header{
+        &.mobile{
+            margin-bottom: 8px;
+        }
+        &__search-btn{
+            color: #fff;
+        }
     }
 }
