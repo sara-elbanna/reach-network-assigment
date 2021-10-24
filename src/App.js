@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <div className='content'>
-        <header>
+        <header className='desktop'>
           <LoadingBar />
         </header>
         <Switch>

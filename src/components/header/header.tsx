@@ -6,7 +6,7 @@ import { setSearchText } from "store/actions/youtubeSearchActions";
 import { AppState } from "store/reducers";
 import './header.scss'
 
-function Header():any {
+function Header(): any {
     let history = useHistory();
     const dispatch = useDispatch()
     const searchText = useSelector((state: AppState) => state.youtubeSearchResult.searchText)
@@ -15,7 +15,8 @@ function Header():any {
     function onSearchInputChange(searchText: string) {
         dispatch(setSearchText(searchText))
     }
-    function onClickSearchButton() {
+    function onClickSearchButton(e:any) {
+        e.preventDefault()
         set_showMobileTextInput(!showMobileTextInput)
         history.push(`/search?query=${searchText}`)
 
@@ -28,10 +29,12 @@ function Header():any {
                         <img src='assets/images/youtube-full.svg' width='100' alt='youtube' />
                     </div>
                     <div>
-                        <input value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} />
-                        <button className='header__search-btn' onClick={onClickSearchButton}>
-                            <i className="fa fa-search" aria-hidden="true"></i>
-                        </button>
+                        <form>
+                            <input value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} />
+                            <button type='submit' className='header__search-btn' onClick={(e)=>onClickSearchButton(e)}>
+                                <i className="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -42,7 +45,7 @@ function Header():any {
                     <img src='assets/images/youtube.png' width='30' alt='youtube' />
                 </div>
                 <div style={{ width: '83%', justifyContent: 'space-between', display: 'flex' }}>
-                    {showMobileTextInput ? <input value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} /> : <span style={{color:'#fff'}}>{searchText}</span>}
+                    {showMobileTextInput ? <input value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} /> : <span style={{ color: '#fff' }}>{searchText}</span>}
                     <button className='header__search-btn' onClick={onClickSearchButton}>
                         <i className="fa fa-search" aria-hidden="true"></i>
                     </button>

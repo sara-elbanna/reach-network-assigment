@@ -1,5 +1,5 @@
 import { Video } from "store/actions/youtubeSearchActions"
-import { convertVideoDurationToHoursAndMinsAndSeconds } from "utils"
+import { convertDateToTimeAgoFormat, convertNumberToKAndMFormat, convertVideoDurationToHoursAndMinsAndSeconds } from "utils"
 
 
 function VideoItemComponent(props: { videoItem: Video }) {
@@ -7,8 +7,6 @@ function VideoItemComponent(props: { videoItem: Video }) {
     if (props.videoItem.duration) {
         formattedDuration = convertVideoDurationToHoursAndMinsAndSeconds(props.videoItem.duration)
     }
-    console.log('formattedDuration', formattedDuration)
-
     return <div className='video-item' >
         <div className='video-item__thumbnail'>
             <span className='video-item__duration'>{formattedDuration}</span>
@@ -17,9 +15,9 @@ function VideoItemComponent(props: { videoItem: Video }) {
         <div className='video-item__data' >
             <h3 className='video-item__title'>{props.videoItem.title}</h3>
             <div className='video-item__metadat'>
-                <span>{props.videoItem.channelTitle}</span>&nbsp;<i className="fas fa-circle" style={{ fontSize: 5 }}></i>&nbsp;
-                <span>{props.videoItem.viewCount} views</span>&nbsp;<i className="fas fa-circle" style={{ fontSize: 5 }}></i>
-                {/* <span>{props.videoItem.viewCount}views.</span> */}
+                <span>{props.videoItem.channelTitle}</span><i className="fas fa-circle " style={{ fontSize: 5, marginLeft:5, marginRight:5 }}></i>
+                <span>{convertNumberToKAndMFormat(Number(props.videoItem.viewCount))} views</span>  <i className="fas fa-circle " style={{ fontSize: 5,marginLeft:5 , marginRight:5}}></i>
+                <span>{convertDateToTimeAgoFormat(props.videoItem.publishedTime)}</span>
             </div>
             <p className='video-item__description desktop'>{props.videoItem.description}</p>
         </div>
