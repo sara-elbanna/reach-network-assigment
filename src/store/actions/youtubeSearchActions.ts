@@ -14,27 +14,30 @@ export type Video = {
     channelTitle: string,
     thumbnailUrl: string
 }
+export type Channel = {
+    id: string,
+    publishedTime: string,
+    videosCount: string | null,
+    subscribersCount: string | null,
+    title: string,
+    description: string,
+    thumbnailUrl: string
+}
 export type searchResult = {
     totalResults: string,
-    videos: Video[]
+    videos: Video[],
+    channels: Channel[]
 }
 export function fetchYoutubeSearchResult(searchText: string) {
     return async (dispatch: any) => {
         dispatch(showLoading())
-        let { videosList, videosIds, totalResults} = await getVideosBasicInfo(searchText)
-        let commaSeparatedIds = videosIds.toString()
-        let videosDetailsRequest = `https://www.googleapis.com/youtube/v3/videos?id=${commaSeparatedIds}&key=${apiKey}&part=contentDetails,statistics`
-        let videosDetailsResult: any = await fetch(videosDetailsRequest)
-        videosDetailsResult = await videosDetailsResult.json()
-        if (videosDetailsResult.items) {
-            videosDetailsResult.items.forEach((item: any) => {
-                videosList[item.id]['duration'] = item.contentDetails.duration
-                videosList[item.id]['viewCount'] = item.statistics.viewCount
-            })
-        }
+        let { videosList, videosIds, channelsList, channelsIds, totalResults } = await getBasicInfo(searchText)
+        videosList = await getVideosDetails(videosIds, videosList)
+        channelsList = await getChannelsDetails(channelsIds, channelsList)
         let searchResult = {
             totalResults: totalResults,
-            videos: Object.values(videosList)
+            videos: Object.values(videosList),
+            channels: Object.values(channelsList)
         }
         dispatch({ type: SET_YOUTUBE_SEARCH_RESULT, payload: searchResult })
         dispatch(hideLoading())
@@ -42,12 +45,17 @@ export function fetchYoutubeSearchResult(searchText: string) {
     }
 }
 
-async function getVideosBasicInfo(searchText: string) {
+async function getBasicInfo(searchText: string) {
     let videosList: any = {}
+    let channelsList: any = {}
+
     let videosIds: string[] = []
-    let basicInfoRequest = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchText}&maxResults=10&part=snippet`
+    let channelsIds: string[] = []
+
+    let basicInfoRequest = `https://www.googleapis.com/youtube/v3/search?key=${apiKey}&q=${searchText}&maxResults=20&part=snippet`
     let basicInfoResult: any = await fetch(basicInfoRequest)
     basicInfoResult = await basicInfoResult.json()
+    console.log('basicInfoResult', basicInfoResult)
     if (basicInfoResult.items) {
         basicInfoResult.items.forEach((item: any) => {
             if (item.id.kind === "youtube#video") {
@@ -65,10 +73,53 @@ async function getVideosBasicInfo(searchText: string) {
                 videosList[id] = videoItem
                 videosIds.push(id)
             }
+            else if (item.id.kind === 'youtube#channel') {
+                let id = item.id.channelId
+                let channelItem: Channel = {
+                    id: id,
+                    publishedTime: item.snippet.publishTime,
+                    videosCount: null,
+                    subscribersCount: null,
+                    title: item.snippet.title,
+                    description: item.snippet.description,
+                    thumbnailUrl: item.snippet.thumbnails.medium.url
+                }
+                channelsList[id] = channelItem
+                channelsIds.push(id)
+            }
         })
     }
-    return { videosList, videosIds, totalResults: basicInfoResult.pageInfo.totalResults}
+    return { videosList, videosIds, channelsList, channelsIds, totalResults: basicInfoResult.pageInfo.totalResults }
 }
+async function getVideosDetails(videosIds:string[], videosList:any){
+    let commaSeparatedIds = videosIds.toString()
+    let videosDetailsRequest = `https://www.googleapis.com/youtube/v3/videos?id=${commaSeparatedIds}&key=${apiKey}&part=contentDetails,statistics`
+    let videosDetailsResult: any = await fetch(videosDetailsRequest)
+    videosDetailsResult = await videosDetailsResult.json()
+    if (videosDetailsResult.items) {
+        videosDetailsResult.items.forEach((item: any) => {
+            videosList[item.id]['duration'] = item.contentDetails.duration
+            videosList[item.id]['viewCount'] = item.statistics.viewCount
+        })
+    }
+    return videosList
+}
+
+async function getChannelsDetails(channelsIds:string[], channelsList:any) {
+    let commaSeparatedIds = channelsIds.toString()
+    let channelsDetailsRequest = `https://www.googleapis.com/youtube/v3/channels?id=${commaSeparatedIds}&key=${apiKey}&part=contentDetails,statistics`
+    let channelsDetailsResult: any = await fetch(channelsDetailsRequest)
+    channelsDetailsResult = await channelsDetailsResult.json()
+    if (channelsDetailsResult.items) {
+        channelsDetailsResult.items.forEach((item: any) => {
+            channelsList[item.id]['videosCount'] = item.statistics.videoCount
+            channelsList[item.id]['subscribersCount'] = item.statistics.subscriberCount
+        })
+    }
+    return channelsList
+}
+
+
 export function setSearchText(searchText: string) {
     return {
         type: SET_SEARCH_TEXT,

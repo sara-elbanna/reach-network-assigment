@@ -14,16 +14,15 @@
         margin-bottom: 20px;
         &__thumbnail{
             margin-right: 20px;
+            position: relative;
         }
         &__data{
             margin-right: 0;
         }
         &__title{
-            margin: 0;
             font-weight: 500;
-        }
-        &__thumbnail{
-            position: relative;
+            margin-top: 0;
+            margin-bottom: 6px;
         }
         &__metadat{
             color: #a1a0a0;
@@ -42,6 +41,36 @@
 
         }
     }
+    .channel-item{
+        display: flex;
+        margin-bottom: 20px;
+        &__thumbnail{
+            margin-right: 20px;
+            width: 31%;
+            text-align: center;
+            img{
+                border-radius: 50%;
+            }
+        }
+        &__data{
+            margin-right: 0;
+            width: 60%;
+        }
+        &__title{
+            margin: 0;
+            font-weight: 500;
+        }
+        &__metadat{
+            color: #a1a0a0;
+            span{
+                display: inline-block;
+            }
+        }
+        &__description{
+            color: #a1a0a0;
+
+        }
+    }
 }
 
 @media (max-width: $screen-md) {
@@ -51,6 +80,7 @@
         .video-item{
             &__thumbnail{
                 width: 55%;
+                height: 90px;
                 img{
                     width: 100%;
                 }
@@ -59,11 +89,40 @@
                 width: 45%;
             }
             &__title{
-                font-size: 16px;
+                font-size: 12px;
                 font-weight: 400;
+                
             }
             &__description{
                 overflow-wrap: break-word;
+            }
+            &__metadat{
+                font-size: 12px;
+                span{
+                    display: block;
+                }
+            }
+            .fas{
+                display: none;
+            }
+        }
+        .channel-item{
+            align-items: center;
+            &__thumbnail{
+                img{
+                    width: 100px;
+                }
+            }
+            &__title{
+                font-size: 12px;
+                font-weight: 400;
+                
+            }
+            &__metadat{
+                font-size: 12px;
+                span{
+                    display: block;
+                }
             }
         }
     }

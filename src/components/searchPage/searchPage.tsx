@@ -4,11 +4,12 @@ import MobileVideosHeader from "components/videosHeader/mobileVideosHeader";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { fetchYoutubeSearchResult, searchResult as SearchResult, setSearchText, Video } from "store/actions/youtubeSearchActions";
+import { fetchYoutubeSearchResult, searchResult as SearchResult, setSearchText, Video, Channel } from "store/actions/youtubeSearchActions";
 import { AppState } from "store/reducers";
 import VideoItemComponent from "./VideoItemComponent";
 import './searchPage.scss'
 import TailSpin from "react-loading-icons/dist/components/tail-spin";
+import ChannelItemComponent from "./channelItemComponent";
 
 function SearchPage() {
     const dispatch = useDispatch()
@@ -35,6 +36,9 @@ function SearchPage() {
             <MobileVideosHeader />
             <div className='search-page__result'>
                 <div className='container'>
+                    {youtubeSearchResult.channels.map((item: Channel, index: number) => {
+                        return <ChannelItemComponent channelItem={item} key={index} />
+                    })}
                     {youtubeSearchResult.videos.map((item: Video, index: number) => {
                         return <VideoItemComponent videoItem={item} key={index} />
                     })}
