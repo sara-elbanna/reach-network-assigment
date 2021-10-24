@@ -2,7 +2,8 @@ import { hideLoading, showLoading } from "react-redux-loading-bar"
 
 export const SET_YOUTUBE_SEARCH_RESULT = 'SET_YOUTUBE_SEARCH_RESULT'
 export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT'
-const apiKey = 'AIzaSyDtbKOvTS5RlWgpq3p2Kb07U08xBfHfrEU'
+
+const apiKey = 'AIzaSyD3RbjhotFgB3D8mt95IolfYMiaettAtXM'
 
 export type Video = {
     id: string,
