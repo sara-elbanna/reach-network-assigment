@@ -13,11 +13,11 @@ function VideoItemComponent(props: { videoItem: Video }) {
             <img src={props.videoItem.thumbnailUrl} alt='video' />
         </div>
         <div className='video-item__data' >
-            <h3 className='video-item__title'>{props.videoItem.title}</h3>
+            <h3 data-testid={'video-title'} className='video-item__title'>{props.videoItem.title}</h3>
             <div className='video-item__metadat'>
-                <span>{props.videoItem.channelTitle}</span><i className="fas fa-circle " style={{ fontSize: 5, marginLeft:5, marginRight:5 }}></i>
-                <span>{convertNumberToKAndMFormat(Number(props.videoItem.viewCount))} views</span>  <i className="fas fa-circle " style={{ fontSize: 5,marginLeft:5 , marginRight:5}}></i>
-                <span>{convertDateToTimeAgoFormat(props.videoItem.publishedTime)}</span>
+                <span data-testid={'video-channel-title'}>{props.videoItem.channelTitle}</span><i className="fas fa-circle " style={{ fontSize: 5, marginLeft:5, marginRight:5 }}></i>
+                <span data-testid={'video-views-count'}>{convertNumberToKAndMFormat(Number(props.videoItem.viewCount))} views</span>  <i className="fas fa-circle " style={{ fontSize: 5,marginLeft:5 , marginRight:5}}></i>
+                <span data-testid={'video-published-date'} className='video-item__publish-date'>{convertDateToTimeAgoFormat(props.videoItem.publishedTime)}</span>
             </div>
             <p className='video-item__description desktop'>{props.videoItem.description}</p>
         </div>

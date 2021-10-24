@@ -25,13 +25,13 @@ function Header(): any {
         <div className='header desktop'>
             <div className='container'>
                 <div className='header__row '>
-                    <div>
+                    <div data-testid={'logo'}>
                         <img src='assets/images/youtube-full.svg' width='100' alt='youtube' />
                     </div>
                     <div>
                         <form>
-                            <input value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} />
-                            <button type='submit' className='header__search-btn' onClick={(e)=>onClickSearchButton(e)}>
+                            <input data-testid={'search-input'} value={searchText} onChange={(e) => onSearchInputChange(e.target.value)} />
+                            <button data-testid={'search-button'} type='submit' className='header__search-btn' onClick={(e)=>onClickSearchButton(e)}>
                                 <i className="fa fa-search" aria-hidden="true"></i>
                             </button>
                         </form>

@@ -4,12 +4,12 @@ function DesktopVideosHeader(props:{resultsCount:string}) {
     return <div className='videos-header desktop'>
         <div className='container '>
             <div className='videos-header__row'>
-                <div>
+                <div data-testid={'filtered-results'}>
                     <span>About</span>&nbsp;
-                    <span>{resultCountFormatted}</span>&nbsp;
+                    <span data-testid={'filtered-results-count'}>{resultCountFormatted}</span>&nbsp;
                     <span>filtered results</span>
                 </div>
-                <div>
+                <div data-testid={'filters-button'}>
                     <img src='assets/images/filter.png' width='30' height='20'alt='filter' />
                     <button style={{margin: '0px 10px',backgroundColor: 'transparent',border: 'none'}}>
                         <span>FILTER</span>
